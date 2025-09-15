@@ -1,7 +1,7 @@
 ---
 name: Release Checklist
 about: Issue template for release champion and team to track release progress
-title: Checklist for Temurin Release <x>
+title: Checklist for Temurin Release <Month> <Year>
 labels: ''
 assignees: ''
 
@@ -21,7 +21,7 @@ Planned absences during the release cycle:
 
 The role of the release champion is to ensure that all release activities listed in this checklist get completed (by delegation to the broader team or by the release champion themselves).  The final task of the release champion during a release is to confirm that all items in the checklist were completed satisfactorily and the release can be declared complete.
 
-Everyone participating in a release, including the release champion are requested to provide feedback into the release retrospective so that the release process can be continuously improved (through simplification and/or automation).
+Everyone participating in a release, including the release champion, are requested to provide feedback into the release retrospective so that the release process can be continuously improved (through simplification and/or automation).
 
 -------
 
@@ -41,15 +41,15 @@ Everyone participating in a release, including the release champion are requeste
 1½ weeks would typically mean running on the Friday so the dry-run(and potential "candidate" build) results are available on the Monday before release week.
 
 CRL to ensure these TC steps are done (please complete steps in order, and ensure jobs have finished before proceeding to next step):
- - [ ] TC: Ensure ALL nodes are online. [Nodes list][AllTCKNodes].
- - [ ] TC: Run [ProcessCheckMultiNode][ProcessCheckMultiNode] to remove old test processes.
+ - [ ] TC: Ensure ALL nodes are online. [Nodes list].
+ - [ ] TC: Run [ProcessCheckMultiNode] to remove old test processes.
  - [ ] TC: Run [DeleteJCKMultiNode][DeleteJCKMultiNode] to remove now-redundent jck versions.
- - [ ] TC: Run [DeleteNonJenkinsTestFiles][DeleteNonJenkinsTestFiles] to remove any old test workspaces. Report any ERROR: to users for folder deletion..
- - [ ] TC: Run [Gather_Host_Info][Gather_Host_Info] to check all nodes have sufficient disk space and iNodes. Browse console report for any node short on space or inodes, and resolve..
+ - [ ] TC: Run [DeleteNonJenkinsTestFiles] to remove any old test workspaces. Report any \"ERROR:\" to users for folder deletion.
+ - [ ] TC: Run [Gather_Host_Info] to check all nodes have sufficient disk space and iNodes. If any nodes are found lacking, review and resolve.
  - [ ] TC: Run [Setup_JCK_Run_Multinode][Setup_JCK_Run_Multinode] to update jck_run folders and jtx exclude files.
  - [ ] TC: Run [DeleteWorkspaces][DeleteWorkspaces] to clean up any lingering jenkins job materials.
 
-[AllTCKNodes]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
+[Nodes list]: https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
 [ProcessCheckMultiNode]: https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [DeleteJCKMultiNode]: https://ci.eclipse.org/temurin-compliance/job/DeleteJCKMultiNode/parambuild/?delay=0sec&LABEL=ci.role.test
 [DeleteNonJenkinsTestFiles]: https://ci.eclipse.org/temurin-compliance/job/DeleteNonJenkinsTestFiles/parambuild/?delay=0sec&LABEL=ci.role.test
@@ -111,7 +111,7 @@ Release Week Checklist:
 
 - [ ] **Check Tags have been released upstream** - Look for mailing list announcements and `-ga` tags in version control.
 - [ ] **Check Tags have been Mirrored** [Mirrors](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/).
-- [ ] **Check "auto-trigger" pipelines or Launch build pipelines** for each version being released. Verify if the release pipline "auto-triggered", if not (maybe expected tag was wrong), then manually launch [(as per release doc](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#steps-for-every-version)) once release tags are available via [launch page](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/build) in Jenkins.  Provide links in this issue to each version's pipeline build(s). There may be multiple pipelines per version if primary and secondary platforms are separated to expedite the release.  In some cases,  where there are unforeseen configuration or infrastructure issues, reruns may be needed.
+- [ ] **Check "auto-trigger" pipelines or Launch build pipelines** for each version being released. Verify if the release pipeline "auto-triggered", if not (maybe expected tag was wrong), then manually launch [(as per release doc](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#steps-for-every-version)) once release tags are available via [launch page](https://ci.adoptopenjdk.net/job/build-scripts/job/openjdk8-pipeline/build) in Jenkins.  Provide links in this issue to each version's pipeline build(s). There may be multiple pipelines per version if primary and secondary platforms are separated to expedite the release.  In some cases,  where there are unforeseen configuration or infrastructure issues, reruns may be needed.
   - LTS jdk8 pipeline(s):
     - **primary jdk8 pipeline:**
       - rerun(s):
@@ -144,14 +144,14 @@ Release Week Checklist:
       - rerun(s):
     - **secondary jdkxx pipeline:**
       - rerun(s):
-- [ ] **Check Upstream Tags, Mirror Tags & Trigger Builds For JDK8 AARCH32** This specific version is built from a separate mirror repository and has a separate build process, this is CURRENTLY not part of the automation which is handled for the other platforms and version. Also note that there is a seperate properties file (testenv_arm32.properties) which needs to be updated.
+- [ ] **Check Upstream Tags, Mirror Tags & Trigger Builds For JDK8 AARCH32** This specific version is built from a separate mirror repository and has a separate build process, this is CURRENTLY not part of the automation which is handled for the other platforms and version. Also note that there is a separate properties file (testenv_arm32.properties) which needs to be updated.
 - [ ] **Add links to the [status doc](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME)** to indicate per-platform builds ready
 - [ ] **Add website banner**
   - [ ] Make a PR.
   - [ ] Check it was automatically published to the website.
   - [ ] Announce that we target releases to be available within 48-72 hours of the GA tags being available.
 - [ ] **Remind** TCK testers (via Slack comment) to update a TCK triage issue with ownership and machine IP **before** running any interactive/automanual tests.
-- [ ] **Summarize test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
+- [ ] **Summarise test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
 - [ ] **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and determine blocking or non-blocking.  Supply links to triage issues or docs for each version here.
   - LTS jdk8 triage summary:
   - LTS jdk11 triage summary:
@@ -167,12 +167,12 @@ Release Week Checklist:
 - [ ] **Publish the release** by re-running the dry-runs of the [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins without the dry-run parameter
 
 - [ ] **Publish updates to the container images to dockerhub**
-- [ ] **Check that the homebrew casks for macos have been automtically updated**
+- [ ] **Check that the homebrew casks for macos have been automatically updated**
 - [ ] **Update support page** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
 - [ ] **Update supported platforms tables if needed** if they have changed in this release. Create a PR to [Supported platforms](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/supported-platforms/index.adoc)
 - [ ] **Update release notes** (_automate_* - github workflow to create update for release notes pages - [example](https://adoptium.net/temurin/release-notes/?version=jdk8u382-b05))
-- [ ] **Check the linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked
-- [ ] **Publicize the release** via Slack #release channel and Twitter (can be partially automated)
+- [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked
+- [ ] **Publicise the release** via Slack #release channel and Twitter (can be partially automated)
 - [ ] **Declare code freeze end** opening up the code for further development
 - [ ] **Disable code freeze bot** In order to enable the code freeze GitHub you need to change the line `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` in the [code-freeze.yml](https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21) GitHub workflow. Please contact the PMC if you need help merging this change.
 - [ ] **Remove website banner** (_automate_* via github workflow in website repository)
@@ -182,6 +182,6 @@ Release Week Checklist:
 - [ ] **Archive/upload all AQA results** Search for `Publish AQA test results` in [RELEASING.md](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md) for the process.
 - [ ] **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts
 - [ ] **Run download_and_sbom_validation job** to verify the downloads, signatures and SBOM contents.
-- [ ] **Create an issue to capture notes for the next release blog** in the [adoptium.net](https://github.com/adoptium/adoptium.net/issues) repository and ensure to delegate the task of finalizing and publishing a PR for this release's blog post. (Use [this link](https://openjdk.org/groups/vulnerability/advisories) to get the vulnerability list).
+- [ ] **Create an issue to capture notes for the next release blog** in the [adoptium.net](https://github.com/adoptium/adoptium.net/issues) repository and ensure to delegate the task of finalising and publishing a PR for this release's blog post. (Use [this link](https://openjdk.org/groups/vulnerability/advisories) to get the vulnerability list).
 - [ ] **Ensure the [adoptium calendar](https://calendar.google.com/calendar/u/0/embed?src=c_56d7263c0ceda87a1678f6144426f23fb53721480b5ff71b073afb51091e5492@group.calendar.google.com) is updated for the next cycle at a minimum**
 - [ ] **Declare the release complete** and close this issue

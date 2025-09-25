@@ -65,7 +65,7 @@ CRL to ensure these TC steps are done (please complete steps in order, and ensur
 	 Log in to the public [nagios](https://nagios.adoptopenjdk.net/nagios/) server, and check the Problems / Services page. If you do not have access, please request it via an issue in the infrastructure repository. If there are any issues, then please log an issue in the infrastructure repository.
  - [ ] **Regenerate The Release Build Pipeline Jobs In Jenkins**
  - [ ] **Update testenv.properties in the AQA release branch to use the -dryrun-ga branches** ([Sample PR](https://github.com/adoptium/aqa-tests/pull/5202/files))
- - [ ] **Prepare & Perform Dry Run/Candidate Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#auto-way---before-release-week-dry-run-release-test) 
+ - [ ] **Prepare & Perform Dry Run/Candidate Build & Tests** : [Dry-run](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#dry-run-tests-do-this-at-least-1-week-before-release-in-the-same-calendar-month) 
  - [ ] TC: **Triage dry-run/candidate TCK job results**
  - [ ] **Restore aqa-tests release branch testenv.properties JDK_BRANCH values to the "-ga" tag after dry-run/candidate has completed**
  - [ ] TC: (Optional based on perceived risk with any machine updates) **Perform TCK Auto-manuals on one platform**
@@ -78,7 +78,7 @@ After 1 day, then :-
 
 - [ ] **Declare code freeze** to ensure stability of build systems and infrastructure during release process : #build and #release slack message: "Code Freeze is now being enabled"
 
-- [ ] **Enable code freeze bot** : [Enabling code freeze](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on--main-branches-of-below-repositories)
+- [ ] **Enable code freeze bot** : [Enabling code freeze](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#enable-code-freeze-on-the-build-repositories)
 
 - [ ] **Prepare For Release**
   - [ ] Ensure that there is an [aqa-tests branch](https://github.com/adoptium/aqa-tests/branches) that matches the name of the [latest aqa-tests release version](https://github.com/adoptium/aqa-tests/releases/latest).
@@ -99,19 +99,18 @@ After 1 day, then :-
 Release Week Checklist:
 
 - [ ] TC: Check All Nodes Online https://ci.eclipse.org/temurin-compliance/label/ci.role.test/
-- [ ] TC: Run https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/ -- with defaults
-- [ ] TC: Run Setup_JCK_Run_Multinode with CLEAN_DIR=true for ( ci.role.test )
-- [ ] TC: Disable Setup_JCK_Run_Multinode To Ensure Test Evidence Is Not Lost
-- [ ] As detailed earlier, again check the nagios server to ensure there are no critical infrastructure issues
+- [ ] TC: Run [ProcessCheckMultiNode](https://ci.eclipse.org/temurin-compliance/job/ProcessCheckMultiNode/) with default parameters.
+- [ ] TC: Run Setup_JCK_Run_Multinode with CLEAN_DIR=true for (ci.role.test).
+- [ ] TC: Disable Setup_JCK_Run_Multinode preserve test evidence.
+- [ ] As detailed earlier, again check the nagios server to ensure there are no critical infrastructure issues.
 - [ ] [Create the Github Issues for tracking progress](https://github.com/adoptium/temurin/issues/new?assignees=&labels=&projects=&template=release-status.md&title=%3Cmonth%3E+%3Cyear%3E+Release+Status+per+Platform%2C+Version+%26+Binary+Type) in the adoptium/temurin repo
 - [ ] Create the Github issues for the [Adoptium public retro](https://github.com/adoptium/temurin/issues/new?assignees=&labels=Retrospective&projects=&template=retrospectives.md&title=General+Retrospective+for+%3Cmonth%3E+%3Cyear%3E+Releases) in the adoptium/temurin repo
-- [ ] TC: Create the retrospective issue for the Temurin Compliance project
+- [ ] TC: Create the retrospective issue for the Temurin Compliance project.
 - [ ] Update the links on the slack channel for the release status and retrospective issues.
-- [ ] Remove x32Windows from release-openjdk{8,11,17}-pipeline (they will be manually triggered later as secondary pipelines)
-- [ ] Check for any last minute cacerts updates and cherry-pick to temurin-build release branch if needed
+- [ ] Remove x32Windows from release-openjdk{8,11,17}-pipeline (they will be manually triggered later as secondary pipelines).
+- [ ] Check for any last minute cacerts updates and cherry-pick to temurin-build release branch if needed.
 
 #### Release Day Onwards
-
 
 - [ ] **Check Tags have been released upstream** - Look for mailing list announcements and `-ga` tags in version control.
 - [ ] **Check Tags have been Mirrored** [Mirrors](https://ci.adoptopenjdk.net/view/git-mirrors/job/git-mirrors/job/adoptium/).
@@ -148,44 +147,65 @@ Release Week Checklist:
       - rerun(s):
     - **secondary jdkxx pipeline:**
       - rerun(s):
-- [ ] **Check Upstream Tags, Mirror Tags & Trigger Builds For JDK8 AARCH32** This specific version is built from a separate mirror repository and has a separate build process, this is CURRENTLY not part of the automation which is handled for the other platforms and version. Also note that there is a separate properties file (testenv_arm32.properties) which needs to be updated.
-- [ ] **Add links to the [status doc](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME)** to indicate per-platform builds ready
-- [ ] **Add website banner**
+- [ ] **Check Upstream Tags, Mirror Tags & Trigger Builds For JDK8 AARCH32** This specific version is built from a separate mirror repository and has a separate build process; this is CURRENTLY not part of the automation which is handled for the other platforms and version. Also note that there is a separate properties file (testenv_arm32.properties) which needs to be updated.
+- [ ] **Add links to the [status doc](https://github.com/adoptium/temurin/issues/TEMPLATE_UPDATEME)** to indicate that the per-platform builds are ready.
+- [ ] **Add website banner.**
   - [ ] Make a PR.
   - [ ] Check it was automatically published to the website.
-  - [ ] Announce that we target releases to be available within 48-72 hours of the GA tags being available.
+  - [ ] Announce that we target releases to be available within:
+    - New release: 48 hours (primaries) or 7 days (secondaries) of the new TCK material being made available to us.
+    - Update release: 48-72 hours of the GA tags being available.
 - [ ] TC: **Remind** TCK testers (via Slack comment) to update a TCK triage issue with ownership and machine IP **before** running any interactive/automanual tests.
-- [ ] **Summarise test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.  Can use the Release Summary Report feature in TRSS to generate a summary of failures, history and possible issues in markup format to be added to this issue as a comment.
-- [ ] **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and determine blocking or non-blocking.  Supply links to triage issues or docs for each version here.
-  - LTS jdk8 triage summary:
-  - LTS jdk11 triage summary:
-  - LTS jdk17 triage summary:
-  - LTS jdk21 triage summary:
-  - LTS jdk25 triage summary:
-  - STS jdkXX triage summary:
-- [ ] **Fix** blocking failures if they exist and confirm others are non-blocking.
-- [ ] TC: **Confirm Temurin-compliance items completed**, per platform/version/binaryType
-- [ ] **Get PMC 'ready to publish' approval**, once no blocking failures exist.
-- [ ] **Generate The Release Notes Per JDK Version **, ( Use https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/ ) and publish them with the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) using `UPSTREAM_JOB_NAME` of `create_release_notes` and the appropriate JOB NUMBER
-- [ ] **Verify that the release notes are live - may require a full update on the API [ we've had problems with this recently](https://github.com/adoptium/temurin/issues/28#issuecomment-2077786176)) and remediate if required.
-- [ ] **Publish the release** by re-running the dry-runs of the [release tool job](https://ci.adoptopenjdk.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/) on Jenkins without the dry-run parameter
-
-- [ ] **Publish updates to the container images to dockerhub**
-- [ ] **Check that the homebrew casks for macos have been automatically updated**
-- [ ] **Update support page** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
-- [ ] **Update supported platforms tables if needed** if they have changed in this release. Create a PR to [Supported platforms](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/supported-platforms/index.adoc)
-- [ ] **Update release notes** (_automate_* - github workflow to create update for release notes pages - [example](https://adoptium.net/temurin/release-notes/?version=jdk8u382-b05))
-- [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked
-- [ ] **Publicise the release** via Slack #release channel and Twitter (can be partially automated)
-- [ ] **Declare code freeze end** opening up the code for further development
-- [ ] **Disable code freeze bot** In order to enable the code freeze GitHub you need to change the line `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` in the [code-freeze.yml](https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21) GitHub workflow. Please contact the PMC if you need help merging this change.
-- [ ] **Remove website banner** (_automate_* via github workflow in website repository)
-- [ ] **Check for presence of jdk8u aarch32 GA tag and mirror it** [Upstream Git repo](https://github.com/openjdk/aarch32-port-jdk8u) - [Mirror job](https://ci.adoptium.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-skara-aarch32-jdk8u/)
-- [ ] **Do all of the above for the jdk8u/aarch32 build: Ensure to specify overridePublishName param**
-- [ ] TC: **Archive/upload all TCK results**
+- [ ] **Monitor and assist** the team during test triage (process outlined below)
+  - **Summarise test results**.  Find each launched build pipeline in [TRSS](https://trss.adoptium.net/) to view a summary of test results.
+  - **Use the Release Summary Report feature** in TRSS to generate a summary of failures, history and possible issues in markup format.
+  - **Add the Test Summary** to a new aqa-tests issue, if one does not already exist.
+  - **Triage** each build and test failure in the release summary report (following the [Triage guidelines](https://github.com/adoptium/aqa-tests/blob/master/doc/Triage.md)) and label them as blocking or non-blocking.
+  - **Fix** blocking failures if they exist and confirm others are non-blocking.
+- [ ] **Supply links to triage issues** for each version being released.
+  - LTS jdk8 triage summary: 
+  - LTS jdk11 triage summary: 
+  - LTS jdk17 triage summary: 
+  - LTS jdk21 triage summary: 
+  - LTS jdk25 triage summary: 
+  - STS jdkXX triage summary: 
+- [ ] TC: **Confirm Temurin-compliance items completed**, per platform/version/binaryType.
+- [ ] **Help team follow the per-platform publishing process** <details><summary>Details.</summary>
+  - Step 1) **Get publish approval from the PMC** once no blocking failures exist.
+    - Example: Post this in \#release and wait for 2 \"+1\" emotes:
+    - \@pmc - Permission to publish \<architecture\> \<OS\>
+  - Step 2) **Publish the release** by following the RELEASE links in the pipeline url.
+  - Step 3) **Notify the community** by copying the link into the thread from Step 1.
+  - Step 4) **Confirm that the job completed successfully.** </details>
+- [ ] **Generate The Release Notes Per JDK Version** using [create_release_notes](https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/)
+- [ ] **Publish the release notes** via the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/). Set UPSTREAM_JOB_NAME to \"create_release_notes\", and set JOB_NUMBER to the create_release_notes job number.
+- [ ] **Verify that the release notes are live**
+  - This may require a full update on the API. See [here](https://github.com/adoptium/adoptium.net-redesign/issues/1107) for details. 
+- [ ] **Publish updates to the container images to dockerhub.**
+- [ ] **Check that the homebrew casks for macos have been automatically updated.** <details><summary>Details.</summary>
+  - They will be located here: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin@XX.rb (where XX is the jdk major version)
+  - and referenced here: https://formulae.brew.sh/cask/temurin@XX (ditto) </details>
+- [ ] **Update support page.** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
+- [ ] **Update supported platforms tables** if they have changed in this release. <details><summary>Details.</summary>
+  - Step 1) Create a PR to change the list of [supported platforms](https://github.com/adoptium/adoptium.net/blob/main/src/data/supported-platforms.json).
+  - Step 2) If this involves adding a new JDK version, alter the relevant JDK major versions (e.g. 23 to 24) in the following files:
+    - https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/page.test.tsx
+    - https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap
+    - https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/__snapshots__/page.test.tsx.snap </details>
+- [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked.
+- [ ] **Publicise the release** via Slack #release channel and Twitter (_automate_* - can be partially automated).
+- [ ] **Declare code freeze end;** opening up the code for further development.
+- [ ] **Disable code freeze bot.**<details> <summary>Details.</summary>
+  - Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:
+  - https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21
+  - Please contact the PMC if you need help merging this change. </details>
+- [ ] **Remove website banner.** (_automate_* via github workflow in website repository)
+- [ ] 01400**Check for the presence of the jdk8u aarch32 GA tag and mirror it.** [Upstream Git repo.](https://github.com/openjdk/aarch32-port-jdk8u) - [Mirror job](https://ci.adoptium.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-skara-aarch32-jdk8u/)
+- [ ] **Do all of the above for the jdk8u/aarch32 build (make sure you specify the overridePublishName parameter).**
+- [ ] TC: **Archive/upload all TCK results.**
 - [ ] **Archive/upload all AQA results** Search for `Publish AQA test results` in [RELEASING.md](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md) for the process.
-- [ ] TC: **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts
+- [ ] TC: **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts.
 - [ ] **Run download_and_sbom_validation job** to verify the downloads, signatures and SBOM contents.
 - [ ] **Create an issue to capture notes for the next release blog** in the [adoptium.net](https://github.com/adoptium/adoptium.net/issues) repository and ensure to delegate the task of finalising and publishing a PR for this release's blog post. (Use [this link](https://openjdk.org/groups/vulnerability/advisories) to get the vulnerability list).
 - [ ] **Ensure the [adoptium calendar](https://calendar.google.com/calendar/u/0/embed?src=c_56d7263c0ceda87a1678f6144426f23fb53721480b5ff71b073afb51091e5492@group.calendar.google.com) is updated for the next cycle at a minimum**
-- [ ] **Declare the release complete** and close this issue
+- [ ] **Declare the release complete** and close this issue.

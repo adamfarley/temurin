@@ -172,36 +172,36 @@ Release Week Checklist:
   - STS jdkXX triage summary: 
 - [ ] TC: **Confirm Temurin-compliance items completed**, per platform/version/binaryType.
 - [ ] **Help team follow the per-platform publishing process** <details><summary>Details.</summary>
-  \- Step 1) **Get publish approval from the PMC** once no blocking failures exist.
-    \- Example: Post this in \#release and wait for 2 \"+1\" emotes:
-    \- \@pmc - Permission to publish \<architecture\> \<OS\>
-  \- Step 2) **Publish the release** by following the RELEASE links in the pipeline url.
-  \- Step 3) **Notify the community** by copying the link into the thread from Step 1.
-  \- Step 4) **Confirm that the job completed successfully.** </details>
+&nbsp;&nbsp;\- Step 1) **Get publish approval from the PMC** once no blocking failures exist.
+&nbsp;&nbsp;&nbsp;&nbsp;\- Example: Post this in \#release and wait for 2 \"+1\" emotes:
+&nbsp;&nbsp;&nbsp;&nbsp;\- \@pmc - Permission to publish \<architecture\> \<OS\>
+&nbsp;&nbsp;\- Step 2) **Publish the release** by following the RELEASE links in the pipeline url.
+&nbsp;&nbsp;\- Step 3) **Notify the community** by copying the link into the thread from Step 1.
+&nbsp;&nbsp;\- Step 4) **Confirm that the job completed successfully.** </details>
 - [ ] **Generate The Release Notes Per JDK Version** using [create_release_notes](https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/)
 - [ ] **Publish the release notes** via the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/). Set UPSTREAM_JOB_NAME to \"create_release_notes\", and set JOB_NUMBER to the create_release_notes job number.
 - [ ] **Verify that the release notes are live**
   - This may require a full update on the API. See [here](https://github.com/adoptium/adoptium.net-redesign/issues/1107) for details. 
 - [ ] **Publish updates to the container images to dockerhub.**
 - [ ] **Check that the homebrew casks for macos have been automatically updated.** <details><summary>Details.</summary>
-  \- They will be located here: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin@XX.rb (where XX is the jdk major version)
-  \- and referenced here: https://formulae.brew.sh/cask/temurin@XX (ditto) </details>
+&nbsp;&nbsp;\- They will be located here: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin@XX.rb (where XX is the jdk major version)
+&nbsp;&nbsp;\- and referenced here: https://formulae.brew.sh/cask/temurin@XX (ditto) </details>
 - [ ] **Update support page.** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
 - [ ] **Update supported platforms tables** if they have changed in this release. <details><summary>Details.</summary>
-  \- Step 1) Create a PR to change the list of [supported platforms](https://github.com/adoptium/adoptium.net/blob/main/src/data/supported-platforms.json).
-  \- Step 2) If this involves adding a new JDK version, alter the relevant JDK major versions (e.g. 23 to 24) in the following files:
-    \- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/page.test.tsx
-    \- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap
-    \- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/__snapshots__/page.test.tsx.snap </details>
+&nbsp;&nbsp;\- Step 1) Create a PR to change the list of [supported platforms](https://github.com/adoptium/adoptium.net/blob/main/src/data/supported-platforms.json).
+&nbsp;&nbsp;\- Step 2) If this involves adding a new JDK version, alter the relevant JDK major versions (e.g. 23 to 24) in the following files:
+&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/page.test.tsx
+&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap
+&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/__snapshots__/page.test.tsx.snap </details>
 - [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked.
 - [ ] **Post the Release Blog** via PR. [Past Example](https://github.com/adoptium/adoptium.net/pull/382).
 - [ ] **Publicise the release** via Slack #release channel and Twitter. See step 7 [here][publish] for details. (_automate_* - can be partially automated).
 [publish]: https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#at-ga-time
 - [ ] **Declare code freeze end;** opening up the code for further development.
 - [ ] **Disable code freeze bot.**<details><summary>Details.</summary>
-  \- Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:</br>
-  \- https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21</br>
-  \- Please contact the PMC if you need help merging this change.</details>
+&nbsp;&nbsp;\- Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:</br>
+&nbsp;&nbsp;\- https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21</br>
+&nbsp;&nbsp;\- Please contact the PMC if you need help merging this change.</details>
 - [ ] **Remove website banner.** (_automate_* via github workflow in website repository)
 - [ ] **Check for the presence of the jdk8u aarch32 GA tag and mirror it.** [Upstream Git repo.](https://github.com/openjdk/aarch32-port-jdk8u) - [Mirror job](https://ci.adoptium.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-skara-aarch32-jdk8u/)
 - [ ] **Do all of the above for the jdk8u/aarch32 build (make sure you specify the overridePublishName parameter).**

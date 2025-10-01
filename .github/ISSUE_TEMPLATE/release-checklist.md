@@ -197,11 +197,11 @@ Release Week Checklist:
 - [ ] **Publicise the release** via Slack #release channel and Twitter (_automate_* - can be partially automated).
 - [ ] **Declare code freeze end;** opening up the code for further development.
 - [ ] **Disable code freeze bot.**<details><summary>Details.</summary>
-  \- Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:
-  \- https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21
-  \- Please contact the PMC if you need help merging this change. </details>
+  \- Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:</br>
+  \- https://github.com/adoptium/.github/blob/main/.github/workflows/code-freeze.yml#L21</br>
+  \- Please contact the PMC if you need help merging this change.</details>
 - [ ] **Remove website banner.** (_automate_* via github workflow in website repository)
-- [ ] 01400**Check for the presence of the jdk8u aarch32 GA tag and mirror it.** [Upstream Git repo.](https://github.com/openjdk/aarch32-port-jdk8u) - [Mirror job](https://ci.adoptium.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-skara-aarch32-jdk8u/)
+- [ ] **Check for the presence of the jdk8u aarch32 GA tag and mirror it.** [Upstream Git repo.](https://github.com/openjdk/aarch32-port-jdk8u) - [Mirror job](https://ci.adoptium.net/view/git-mirrors/job/git-mirrors/job/adoptium/job/git-skara-aarch32-jdk8u/)
 - [ ] **Do all of the above for the jdk8u/aarch32 build (make sure you specify the overridePublishName parameter).**
 - [ ] TC: **Archive/upload all TCK results.**
 - [ ] **Archive/upload all AQA results** Search for `Publish AQA test results` in [RELEASING.md](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md) for the process.

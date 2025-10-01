@@ -194,7 +194,9 @@ Release Week Checklist:
     \- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap
     \- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/__snapshots__/page.test.tsx.snap </details>
 - [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked.
-- [ ] **Publicise the release** via Slack #release channel and Twitter (_automate_* - can be partially automated).
+- [ ] **Post the Release Blog** via PR. [Past Example](https://github.com/adoptium/adoptium.net/pull/382).
+- [ ] **Publicise the release** via Slack #release channel and Twitter. See step 7 [here][publish] for details. (_automate_* - can be partially automated).
+[publish]: https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#at-ga-time
 - [ ] **Declare code freeze end;** opening up the code for further development.
 - [ ] **Disable code freeze bot.**<details><summary>Details.</summary>
   \- Change `if: github.repository_owner == 'adoptium' && true` to be `if: github.repository_owner == 'adoptium' && false` here:</br>
@@ -206,7 +208,8 @@ Release Week Checklist:
 - [ ] TC: **Archive/upload all TCK results.**
 - [ ] **Archive/upload all AQA results** Search for `Publish AQA test results` in [RELEASING.md](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md) for the process.
 - [ ] TC: **Use EclipseMirror job in the Temurin Compliance jenkins to store a backup** of the release artifacts.
-- [ ] **Run download_and_sbom_validation job** to verify the downloads, signatures and SBOM contents.
+- [ ] **Run [download_and_sbom_validation job]** to verify the downloads, signatures and SBOM contents.
+[download_and_sbom_validation job]: https://ci.adoptium.net/job/build-scripts/job/release/job/download_and_sbom_validation
 - [ ] **Create an issue to capture notes for the next release blog** in the [adoptium.net](https://github.com/adoptium/adoptium.net/issues) repository and ensure to delegate the task of finalising and publishing a PR for this release's blog post. (Use [this link](https://openjdk.org/groups/vulnerability/advisories) to get the vulnerability list).
 - [ ] **Ensure the [adoptium calendar](https://calendar.google.com/calendar/u/0/embed?src=c_56d7263c0ceda87a1678f6144426f23fb53721480b5ff71b073afb51091e5492@group.calendar.google.com) is updated for the next cycle at a minimum**
 - [ ] **Declare the release complete** and close this issue.

@@ -172,11 +172,11 @@ Release Week Checklist:
   - STS jdkXX triage summary: 
 - [ ] TC: **Confirm Temurin-compliance items completed**, per platform/version/binaryType.
 - [ ] **Help team follow the per-platform publishing process** <details><summary>Details.</summary>
-&nbsp;&nbsp;\- Step 1) **Get publish approval from the PMC** once no blocking failures exist.
-&nbsp;&nbsp;&nbsp;&nbsp;\- Example: Post this in \#release and wait for 2 \"+1\" emotes:
-&nbsp;&nbsp;&nbsp;&nbsp;\- \@pmc - Permission to publish \<architecture\> \<OS\>
-&nbsp;&nbsp;\- Step 2) **Publish the release** by following the RELEASE links in the pipeline url.
-&nbsp;&nbsp;\- Step 3) **Notify the community** by copying the link into the thread from Step 1.
+&nbsp;&nbsp;\- Step 1) **Get publish approval from the PMC** once no blocking failures exist.</br>
+&nbsp;&nbsp;&nbsp;&nbsp;\- Example: Post this in \#release and wait for 2 \"+1\" emotes:</br>
+&nbsp;&nbsp;&nbsp;&nbsp;\- \@pmc - Permission to publish \<architecture\> \<OS\></br>
+&nbsp;&nbsp;\- Step 2) **Publish the release** by following the RELEASE links in the pipeline url.</br>
+&nbsp;&nbsp;\- Step 3) **Notify the community** by copying the link into the thread from Step 1.</br>
 &nbsp;&nbsp;\- Step 4) **Confirm that the job completed successfully.** </details>
 - [ ] **Generate The Release Notes Per JDK Version** using [create_release_notes](https://ci.adoptium.net/job/build-scripts/job/release/job/create_release_notes/)
 - [ ] **Publish the release notes** via the [release tool](https://ci.adoptium.net/job/build-scripts/job/release/job/refactor_openjdk_release_tool/). Set UPSTREAM_JOB_NAME to \"create_release_notes\", and set JOB_NUMBER to the create_release_notes job number.
@@ -184,14 +184,14 @@ Release Week Checklist:
   - This may require a full update on the API. See [here](https://github.com/adoptium/adoptium.net-redesign/issues/1107) for details. 
 - [ ] **Publish updates to the container images to dockerhub.**
 - [ ] **Check that the homebrew casks for macos have been automatically updated.** <details><summary>Details.</summary>
-&nbsp;&nbsp;\- They will be located here: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin@XX.rb (where XX is the jdk major version)
+&nbsp;&nbsp;\- They will be located here: https://github.com/Homebrew/homebrew-cask/blob/master/Casks/t/temurin@XX.rb (where XX is the jdk major version)</br>
 &nbsp;&nbsp;\- and referenced here: https://formulae.brew.sh/cask/temurin@XX (ditto) </details>
 - [ ] **Update support page.** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
 - [ ] **Update supported platforms tables** if they have changed in this release. <details><summary>Details.</summary>
-&nbsp;&nbsp;\- Step 1) Create a PR to change the list of [supported platforms](https://github.com/adoptium/adoptium.net/blob/main/src/data/supported-platforms.json).
-&nbsp;&nbsp;\- Step 2) If this involves adding a new JDK version, alter the relevant JDK major versions (e.g. 23 to 24) in the following files:
-&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/page.test.tsx
-&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap
+&nbsp;&nbsp;\- Step 1) Create a PR to change the list of [supported platforms](https://github.com/adoptium/adoptium.net/blob/main/src/data/supported-platforms.json).</br>
+&nbsp;&nbsp;\- Step 2) If this involves adding a new JDK version, alter the relevant JDK major versions (e.g. 23 to 24) in the following files:</br>
+&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/page.test.tsx</br>
+&nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/supported-platforms/__tests__/__snapshots__/page.test.tsx.snap</br>
 &nbsp;&nbsp;&nbsp;&nbsp;\- https://github.com/adoptium/adoptium.net/blob/main/src/app/%5Blocale%5D/temurin/nightly/__tests__/__snapshots__/page.test.tsx.snap </details>
 - [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked.
 - [ ] **Post the Release Blog** via PR. [Past Example](https://github.com/adoptium/adoptium.net/pull/382).

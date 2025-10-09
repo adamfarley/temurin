@@ -179,7 +179,7 @@ Release Week Checklist:
 - [ ] **Publish updates to the container images to dockerhub.**
 - [ ] **Check that the homebrew casks for macos have been automatically updated.** Details [here](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#at-ga-time) (Section \"4.1. \[Mac only\]\").
 - [ ] **Update support page.** (_automate_* github workflow to create a PR to update the versions and dates on the [support table](https://github.com/adoptium/adoptium.net/blob/main/content/asciidoc-pages/support/_partials/support-table.adoc))
-- [ ] **Update supported platforms tables** if they have changed in this release. Details [here](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md#supported_platforms_table).
+- [ ] **Update supported platforms tables** if they have changed in this release. Details [here](https://github.com/adoptium/temurin-build/blob/master/RELEASING.md), search for \"supported platforms table\".
 - [ ] **Check the Linux installer publishing jobs have worked** This will be triggered automatically by the release tool job, but its status should be checked.
 - [ ] **Post the Release Blog** via PR. [Past Example](https://github.com/adoptium/adoptium.net/pull/382).
 - [ ] **Publicise the release** via Slack #release channel and Twitter. See step 7 [here][publish] for details. (_automate_* - can be partially automated).
